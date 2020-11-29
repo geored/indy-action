@@ -37,8 +37,9 @@ async function run() {
 
       const body = newPullRequest(repo, title, author, htmlUrl)
       // async send http post  request...
-      await sendMessageToChat(body, allChats[0]);
-      await sendMessageToChat(body, allChats[1]);
+      for (let chat in allChats) {
+        await sendMessageToChat(body, chat);
+      }
       break
     }
     case 'release': {
@@ -49,8 +50,9 @@ async function run() {
 
       const body = newRelease(repo, tag, author, htmlUrl)
       // async send http post  request...
-      await sendMessageToChat(body, allChats[0]);
-      await sendMessageToChat(body, allChats[1]);
+      for (let chat in allChats) {
+        await sendMessageToChat(body, chat);
+      }
       break
     }
     default:
