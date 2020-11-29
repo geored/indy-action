@@ -19,40 +19,40 @@ console.log(`Sending notification msg to  endpoints: ${gchats}`)
 //     steps:
 //       - uses: delivery-much/actions-chat@v1
 //         with:
-//           url: ${{ secrets.WEBHOOK_URLS }}
+//           gchat-webhooks: ${{ secrets.WEBHOOK_URLS }}
 
 // Explanation: WEBHOOK_URLS = whitespace seperated list of webhook urls
 
-(async function run() {
-    //  sending post request to all provided endpoints...
-    const allChats = gchats.split(' ');
+async function run() {
+  //  sending post request to all provided endpoints...
+  const allChats = gchats.split(' ');
 
-    const { repo } = github.context.repo
-    const tag = github.context.payload.release.tag_name
-    const author = github.context.actor
-    const htmlUrl = github.context.payload.release.html_url
+  const { repo } = github.context.repo
+  const tag = github.context.payload.release.tag_name
+  const author = github.context.actor
+  const htmlUrl = github.context.payload.release.html_url
 
-      // check event type ...
-      switch (github.context.eventName) {
-        case 'pull_request': {
-          const body = newPullRequest(repo, title, author, htmlUrl)
-          // async send http post  request...
-          await sendMessageToChat(body,chat);
-          break
-        }
-        case 'release': {
-          const body = newRelease(repo, tag, author, htmlUrl)
-          // async send http post  request...
-          await sendMessageToChat(body,chat);
-          break
-        }
-        default:
-          throw new Error('Sorry, we don\'t accept this event type yet.')
-      }
-})();
+  // check event type ...
+  switch (github.context.eventName) {
+    case 'pull_request': {
+      const body = newPullRequest(repo, title, author, htmlUrl)
+      // async send http post  request...
+      await sendMessageToChat(body, chat);
+      break
+    }
+    case 'release': {
+      const body = newRelease(repo, tag, author, htmlUrl)
+      // async send http post  request...
+      await sendMessageToChat(body, chat);
+      break
+    }
+    default:
+      throw new Error('Sorry, we don\'t accept this event type yet.')
+  }
+};
 
 
-const sendMessageToChat = (body,webhook) => {
+const sendMessageToChat = (body, webhook) => {
   return axios({
     url: webhook,
     method: 'POST',
@@ -175,4 +175,7 @@ const newRelease = (repo, tag, author, htmlUrl) => {
   return body
 }
 
+
+
+run();
 
