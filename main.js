@@ -5,6 +5,25 @@ const gchats = core.getInput('gchat-webhooks')
 
 console.log(`Sending notification msg to  endpoints: ${gchats}`)
 
+
+// Example Workflow for releases and PR's:
+
+// name: Release|PR
+// on:
+//   release:
+//     types: [created]
+//   pull_request:
+//     types: [opened, reopened]
+// jobs:
+//   chat:
+//     runs-on: ubuntu-latest
+//     steps:
+//       - uses: delivery-much/actions-chat@v1
+//         with:
+//           url: ${{ secrets.WEBHOOK_URLS }}
+
+// Explanation: WEBHOOK_URLS = whitespace seperated list of webhook urls
+
 (async function run() {
 
     //  sending post request to all provided endpoints...
@@ -24,7 +43,7 @@ console.log(`Sending notification msg to  endpoints: ${gchats}`)
 
           // async send http post  request...
           await sendMessageToChat(body,chat);
-          
+
           break
         }
         case 'release': {
