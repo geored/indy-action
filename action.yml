@@ -1,8 +1,14 @@
-name: "Indy gchat notification action"
+name: "Indy Notification Action"
 
+description: "Indy notification action  for sending team notification on github events"
 
 
 inputs:
+	gchat-webhooks:
+		description: "List of space separated gchat webhook endpoints  for sending notificcations at"
+		required: true
+		default: ""
 
-
-outputs:
+runs:
+	using: "node12"
+	main: "main.js"
