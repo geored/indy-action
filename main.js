@@ -28,19 +28,22 @@ async function run() {
   const allChats = gchats.split(' ');
 
   const { repo } = github.context.repo
-  const tag = github.context.payload.release.tag_name
+  
   const author = github.context.actor
   const htmlUrl = github.context.payload.release.html_url
 
   // check event type ...
   switch (github.context.eventName) {
     case 'pull_request': {
+      const title = github.context.payload.pull_request.title
       const body = newPullRequest(repo, title, author, htmlUrl)
       // async send http post  request...
       await sendMessageToChat(body, chat);
       break
     }
     case 'release': {
+      const tag = github.context.payload.release.tag_name
+
       const body = newRelease(repo, tag, author, htmlUrl)
       // async send http post  request...
       await sendMessageToChat(body, chat);
