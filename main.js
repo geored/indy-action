@@ -38,7 +38,8 @@ async function run() {
       const body = newPullRequest(repo, title, author, htmlUrl)
       // async send http post  request...
       for (let chat in allChats) {
-        await sendMessageToChat(body, chat);
+        let response = await sendMessageToChat(body, chat);
+        console.log(`Response Code ${response.statusCode} recieved for chat: ${chat}`)
       }
       break
     }
@@ -51,7 +52,8 @@ async function run() {
       const body = newRelease(repo, tag, author, htmlUrl)
       // async send http post  request...
       for (let chat in allChats) {
-        await sendMessageToChat(body, chat);
+        let response = await sendMessageToChat(body, chat);
+        console.log(`Response Code ${response.statusCode} recieved for chat: ${chat}`)
       }
       break
     }
