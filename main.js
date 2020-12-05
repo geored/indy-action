@@ -17,7 +17,7 @@ console.log(`Sending notification msg to  endpoints: ${gchats}`)
 //   chat:
 //     runs-on: ubuntu-latest
 //     steps:
-//       - uses: delivery-much/actions-chat@v1
+//       - uses: geored/indy-action@v7
 //         with:
 //           gchat-webhooks: ${{ secrets.WEBHOOK_URLS }}
 
